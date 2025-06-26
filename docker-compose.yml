@@ -5,9 +5,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    environment:
-      - NODE_ENV=development
-      - DATABASE_URL=postgresql://postgres:password@db:5432/dvsa_test_booking
+    env_file:
+      - .env
     depends_on:
       db:
         condition: service_healthy
