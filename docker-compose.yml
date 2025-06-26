@@ -9,11 +9,11 @@ services:
       - NODE_ENV=development
       - DATABASE_URL=postgresql://postgres:password@db:5432/dvsa_test_booking
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - .:/app
       - /app/node_modules
-    command: pnpm dev
 
   db:
     image: postgres:16-alpine
@@ -26,6 +26,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d dvsa_test_booking"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   pgadmin:
     image: dpage/pgadmin4:latest

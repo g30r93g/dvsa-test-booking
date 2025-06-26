@@ -1,8 +1,9 @@
 # Use Node.js 22 Alpine image
 FROM node:22-alpine
 
-# Install pnpm
-RUN npm install -g pnpm
+# Install pnpm and PostgreSQL client
+RUN npm install -g pnpm && \
+    apk add --no-cache postgresql-client
 
 # Set working directory
 WORKDIR /app
@@ -16,8 +17,12 @@ RUN pnpm install
 # Copy source code
 COPY . .
 
+# Copy and make entrypoint script executable
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 # Expose port 3000
 EXPOSE 3000
 
-# Start the development server
-CMD ["pnpm", "dev"]
+# Use the entrypoint script
+ENTRYPOINT ["docker-entrypoint.sh"]
