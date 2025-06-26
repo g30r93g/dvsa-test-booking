@@ -19,7 +19,10 @@ export default function RootLayout({
       signInForceRedirectUrl="/"
       signUpForceRedirectUrl="/"
     >
-      <html lang="en">
+      <html
+        lang="en"
+        suppressHydrationWarning
+    >
         <body>
           {children}
         </body>
