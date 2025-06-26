@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "../globals.css";
 import { ThemeProvider } from "next-themes";
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,28 +12,50 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "DVSA Test Booking",
-};
-
-export default function RootLayout({
+export default function FrontendLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    <div className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
       >
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-          >
-        {children}
-        </ThemeProvider>
-      </body>
-    </html>
+        <header className="border-b border-gray-200 dark:border-gray-800">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center py-4">
+              <div className="flex items-center">
+                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+                  DVSA Test Booking
+                </h1>
+              </div>
+              <div className="flex items-center space-x-4">
+                <SignedOut>
+                  <SignInButton mode="modal">
+                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                      Sign In
+                    </button>
+                  </SignInButton>
+                  <SignUpButton mode="modal">
+                    <button className="border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-md text-sm font-medium">
+                      Sign Up
+                    </button>
+                  </SignUpButton>
+                </SignedOut>
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
+              </div>
+            </div>
+          </div>
+        </header>
+        <main>
+          {children}
+        </main>
+      </ThemeProvider>
+    </div>
   );
 }
