@@ -15,9 +15,9 @@ export default function RootLayout({
   return (
     <ClerkProvider
       signInFallbackRedirectUrl="/"
-      signUpFallbackRedirectUrl="/"
+      signUpFallbackRedirectUrl="/onboarding"
       signInForceRedirectUrl="/"
-      signUpForceRedirectUrl="/"
+      signUpForceRedirectUrl="/onboarding"
     >
       <html
         lang="en"
