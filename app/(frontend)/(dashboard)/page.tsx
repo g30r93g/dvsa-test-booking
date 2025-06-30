@@ -1,9 +1,16 @@
-export default async function DashboardPage() {
-    // Todo: Fetch the user's booking data
+import { getUserRole } from '@/lib/cache-fns';
+import LearnerPanel from "./LearnerPanel";
+import InstructorPanel from "./InstructorPanel";
 
-    return (
-        <div>
-            <h1>Your Bookings</h1>
-        </div>
-    )
+export default async function DashboardPage() {
+    const userType = await getUserRole();
+
+    switch (userType) {
+        case "learner":
+            return <LearnerPanel />
+        case "instructor":
+            return <InstructorPanel />
+        default:
+            return <div>User role not found.</div>;
+    }
 }
