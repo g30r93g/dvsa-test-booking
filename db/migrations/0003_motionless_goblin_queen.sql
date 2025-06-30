@@ -1,0 +1,8 @@
+ALTER TABLE "learners" ALTER COLUMN "theory_test_number" DROP NOT NULL;--> statement-breakpoint
+ALTER TABLE "booking_approvals" ADD CONSTRAINT "booking_approvals_booking_id_bookings_id_fk" FOREIGN KEY ("booking_id") REFERENCES "public"."bookings"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "booking_approvals" ADD CONSTRAINT "booking_approvals_learner_id_learners_id_fk" FOREIGN KEY ("learner_id") REFERENCES "public"."learners"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "booking_approvals" ADD CONSTRAINT "booking_approvals_instructor_id_instructors_id_fk" FOREIGN KEY ("instructor_id") REFERENCES "public"."instructors"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "bookings" ADD CONSTRAINT "bookings_slot_id_slots_id_fk" FOREIGN KEY ("slot_id") REFERENCES "public"."slots"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "bookings" ADD CONSTRAINT "bookings_learner_id_learners_id_fk" FOREIGN KEY ("learner_id") REFERENCES "public"."learners"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "instructor_students" ADD CONSTRAINT "instructor_students_instructor_id_instructors_id_fk" FOREIGN KEY ("instructor_id") REFERENCES "public"."instructors"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "instructor_students" ADD CONSTRAINT "instructor_students_student_id_learners_id_fk" FOREIGN KEY ("student_id") REFERENCES "public"."learners"("id") ON DELETE no action ON UPDATE no action;
