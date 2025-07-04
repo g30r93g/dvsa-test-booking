@@ -45,11 +45,13 @@ export async function getUserRole() {
 
   if (learnerResult.length > 0) {
     redis.set(`user:role:${userId}`, "learner");
+    redis.expire(`user:role:${userId}`, 60 * 60 * 24); // Cache for 1 day
     userRole = "learner";
   }
 
   if (instructorResult.length > 0) {
     redis.set(`user:role:${userId}`, "instructor");
+    redis.expire(`user:role:${userId}`, 60 * 60 * 24); // Cache for 1 day
     userRole = "instructor";
   }
 
@@ -86,6 +88,7 @@ export async function getLearnerId() {
 
   // Cache the learner ID
   await redis.set(`learner:id:${user.id}`, learnerRecord.id);
+  await redis.expire(`learner:id:${user.id}`, 60 * 60 * 24); // Cache for 1 day
 
   return learnerRecord.id;
 }
@@ -119,6 +122,7 @@ export async function getInstructorId() {
 
   // Cache the instructor ID
   await redis.set(`instructor:id:${user.id}`, instructorRecord.id);
+  await redis.expire(`instructor:id:${user.id}`, 60 * 60 * 24); // Cache for 1 day
 
   return instructorRecord.id;
 } 
