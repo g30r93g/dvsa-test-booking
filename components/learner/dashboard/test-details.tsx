@@ -1,9 +1,18 @@
 import { db } from "@/db";
-import { eq } from "drizzle-orm";
-import { booking } from "@/db/schema";
 import { getLearnerId } from "@/lib/cache-fns";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { slot } from "@/db/schema";
+import { format } from "date-fns";
+
+type TestBooking = {
+    id: string;
+    bookedByType: "instructor" | "learner";
+    bookedById: string; 
+    learnerId: string;
+    slot: typeof slot.$inferSelect
+}
+
 
 async function getTestBooking() {
     const learnerId = await getLearnerId();
@@ -13,14 +22,22 @@ async function getTestBooking() {
     }
 
     // Fetch the test booking details for the learner
-    const testBooking = await db
-        .select()
-        .from(booking)
-        .where(eq(booking.learnerId, learnerId))
-        .limit(1)
-        .then((result) => result[0]);
+    const data = await db.query.booking.findFirst({
+        where: (booking, { eq }) => eq(booking.learnerId, learnerId),
+        with: {
+            slot: true, // Assuming 'slot' is a relation or column in the booking table
+        },
+    }) as TestBooking;
 
-    return testBooking;
+    if (!data) {
+        return null; // No booking found for the learner
+    }
+
+    // Transform the data to match the expected type
+    return {
+        id: data.id,
+        slot: data.slot,
+    };
 }
 
 export default async function TestDetails() {
@@ -39,10 +56,14 @@ export default async function TestDetails() {
         );
     }
 
+    const slotStart = testBooking.slot.startTime;
+    const slotEnd = testBooking.slot.endTime;
+
     return (
         <div className="my-4">
             <h2 className="text-xl font-bold">Your Test Details</h2>
-            <p>{testBooking.slot}</p>
+            <p>Start: {format(slotStart, 'HH:mm d/m/y')}</p>
+            <p>End: {format(slotEnd, 'HH:mm d/m/y')}</p>
         </div>
     );
 }
