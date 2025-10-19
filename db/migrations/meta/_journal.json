@@ -29,6 +29,13 @@
       "when": 1751292030924,
       "tag": "0003_motionless_goblin_queen",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1751399664621,
+      "tag": "0004_thick_warpath",
+      "breakpoints": true
     }
   ]
 }
