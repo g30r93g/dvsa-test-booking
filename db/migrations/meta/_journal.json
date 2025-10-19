@@ -8,6 +8,27 @@
       "when": 1750978594863,
       "tag": "0000_concerned_blonde_phantom",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1750982400698,
+      "tag": "0001_sharp_firelord",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1751213616808,
+      "tag": "0002_faithful_lorna_dane",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1751292030924,
+      "tag": "0003_motionless_goblin_queen",
+      "breakpoints": true
     }
   ]
 }

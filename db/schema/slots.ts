@@ -368,7 +368,7 @@ export const venueEnum = pgEnum("venue", [
 ]);
 
 export const slot = pgTable("slots", {
-    id: uuid("id").primaryKey(),
+    id: uuid("id").primaryKey().defaultRandom(),
     type: testTypeEnum("test_type").notNull(),
     venue: venueEnum("venue").notNull(),
     bookableFrom: timestamp("bookable_from").notNull(),
